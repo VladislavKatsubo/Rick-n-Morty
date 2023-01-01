@@ -14,6 +14,7 @@
 		0D7890C5295F4AE20000E882 /* RMSingleLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7890C4295F4AE20000E882 /* RMSingleLocation.swift */; };
 		0D7890C7295F4BEE0000E882 /* RMCharacterStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7890C6295F4BEE0000E882 /* RMCharacterStatus.swift */; };
 		0D7890C9295F4C040000E882 /* RMCharacterGender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7890C8295F4C040000E882 /* RMCharacterGender.swift */; };
+		0D7890CB2961A85A0000E882 /* RMGetAllCharactersResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7890CA2961A85A0000E882 /* RMGetAllCharactersResponse.swift */; };
 		0DB3B89B295819700093726B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3B89A295819700093726B /* AppDelegate.swift */; };
 		0DB3B89D295819700093726B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3B89C295819700093726B /* SceneDelegate.swift */; };
 		0DB3B89F295819700093726B /* RMTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB3B89E295819700093726B /* RMTabBarController.swift */; };
@@ -37,6 +38,7 @@
 		0D7890C4295F4AE20000E882 /* RMSingleLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSingleLocation.swift; sourceTree = "<group>"; };
 		0D7890C6295F4BEE0000E882 /* RMCharacterStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharacterStatus.swift; sourceTree = "<group>"; };
 		0D7890C8295F4C040000E882 /* RMCharacterGender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharacterGender.swift; sourceTree = "<group>"; };
+		0D7890CA2961A85A0000E882 /* RMGetAllCharactersResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMGetAllCharactersResponse.swift; sourceTree = "<group>"; };
 		0DB3B897295819700093726B /* Rick&Morty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Rick&Morty.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DB3B89A295819700093726B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0DB3B89C295819700093726B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,6 +67,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D7890CC2961A8D70000E882 /* DataTypes */ = {
+			isa = PBXGroup;
+			children = (
+				0DB3B8BA29581B6E0093726B /* RMCharacter.swift */,
+				0D7890C2295F4A6C0000E882 /* RMOrigin.swift */,
+				0D7890C4295F4AE20000E882 /* RMSingleLocation.swift */,
+				0D7890C6295F4BEE0000E882 /* RMCharacterStatus.swift */,
+				0D7890C8295F4C040000E882 /* RMCharacterGender.swift */,
+				0DB3B8B829581B5E0093726B /* RMLocation.swift */,
+				0DB3B8BC29581B760093726B /* RMEpisode.swift */,
+			);
+			path = DataTypes;
+			sourceTree = "<group>";
+		};
+		0D7890CD2961A8E30000E882 /* APIResponseTypes */ = {
+			isa = PBXGroup;
+			children = (
+				0D7890CA2961A85A0000E882 /* RMGetAllCharactersResponse.swift */,
+			);
+			path = APIResponseTypes;
+			sourceTree = "<group>";
+		};
 		0DB3B88E295819700093726B = {
 			isa = PBXGroup;
 			children = (
@@ -107,13 +131,8 @@
 		0DB3B8B229581AB80093726B /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0DB3B8BA29581B6E0093726B /* RMCharacter.swift */,
-				0D7890C2295F4A6C0000E882 /* RMOrigin.swift */,
-				0D7890C4295F4AE20000E882 /* RMSingleLocation.swift */,
-				0D7890C6295F4BEE0000E882 /* RMCharacterStatus.swift */,
-				0D7890C8295F4C040000E882 /* RMCharacterGender.swift */,
-				0DB3B8B829581B5E0093726B /* RMLocation.swift */,
-				0DB3B8BC29581B760093726B /* RMEpisode.swift */,
+				0D7890CC2961A8D70000E882 /* DataTypes */,
+				0D7890CD2961A8E30000E882 /* APIResponseTypes */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -257,6 +276,7 @@
 				0D7890C9295F4C040000E882 /* RMCharacterGender.swift in Sources */,
 				0DB3B8C029581BDC0093726B /* RMCharacterViewController.swift in Sources */,
 				0D7890C5295F4AE20000E882 /* RMSingleLocation.swift in Sources */,
+				0D7890CB2961A85A0000E882 /* RMGetAllCharactersResponse.swift in Sources */,
 				0DB3B8B929581B5E0093726B /* RMLocation.swift in Sources */,
 				0DB3B8A5295819700093726B /* Rick_Morty.xcdatamodeld in Sources */,
 				0D7890C3295F4A6C0000E882 /* RMOrigin.swift in Sources */,

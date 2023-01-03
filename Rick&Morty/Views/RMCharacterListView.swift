@@ -7,8 +7,17 @@
 
 import UIKit
 
+protocol RMCharacterListViewDelegate: AnyObject {
+    func rmCharacterListView(
+        _ characterListView: RMCharacterListView,
+        didSelectCharacter character: RMCharacter
+    )
+}
+
 // View that handles showing list of characters, loader, etc.
 final class RMCharacterListView: UIView {
+    
+    public weak var delegate: RMCharacterListViewDelegate?
     
     private let viewModel = RMCharacterListViewViewModel()
     
@@ -19,24 +28,32 @@ final class RMCharacterListView: UIView {
         return spinner
     }()
     
-    private let collectionvView: UICollectionView = {
+    private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.isHidden = true
         collectionView.alpha = 0
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(RMCharacterCollectionViewCell.self,
-                                forCellWithReuseIdentifier: RMCharacterCollectionViewCell.identifier)
+        collectionView.register(
+            RMCharacterCollectionViewCell.self,
+            forCellWithReuseIdentifier: RMCharacterCollectionViewCell.identifier)
+        collectionView.register(
+            RMFooterLoadingCollectionReusableView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: RMFooterLoadingCollectionReusableView.identifier
+        )
         return collectionView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
-        addSubviews(collectionvView, spinner)
+        addSubviews(collectionView, spinner)
         addConstraints()
         spinner.startAnimating()
+        
+        viewModel.delegate = self
         
         viewModel.fetchCharacters()
         
@@ -54,26 +71,37 @@ final class RMCharacterListView: UIView {
             spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
             spinner.centerYAnchor.constraint(equalTo: centerYAnchor),
             
-            collectionvView.topAnchor.constraint(equalTo: topAnchor),
-            collectionvView.leftAnchor.constraint(equalTo: leftAnchor),
-            collectionvView.rightAnchor.constraint(equalTo: rightAnchor),
-            collectionvView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            collectionView.topAnchor.constraint(equalTo: topAnchor),
+            collectionView.leftAnchor.constraint(equalTo: leftAnchor),
+            collectionView.rightAnchor.constraint(equalTo: rightAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
         ])
     }
     
     private func setUpCollectionView() {
-        collectionvView.delegate = viewModel
-        collectionvView.dataSource = viewModel
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            self.spinner.stopAnimating()
-            self.collectionvView.isHidden = false
-            UIView.animate(withDuration: 0.4) {
-                self.collectionvView.alpha = 1
-            }
-        })
+        collectionView.delegate = viewModel
+        collectionView.dataSource = viewModel
+    }
+}
+
+extension RMCharacterListView: RMCharacterListViewModelDelegate {
+    func didSelectCharacter(character: RMCharacter) {
+        delegate?.rmCharacterListView(self, didSelectCharacter: character)
     }
     
+    func didLoadInitialCharacters() {
+        spinner.stopAnimating()
+        collectionView.isHidden = false
+        collectionView.reloadData() // Initial fetch
+        UIView.animate(withDuration: 0.4) {
+            self.collectionView.alpha = 1
+        }
+    }
     
+    func didLoadMoreCharacters(with newIndexPaths: [IndexPath]) {
+        collectionView.performBatchUpdates {
+            self.collectionView.insertItems(at: [])
+        }
+    }
 }

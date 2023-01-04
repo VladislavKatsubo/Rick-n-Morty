@@ -7,7 +7,7 @@
 
 import Foundation
 
-class RMCharacterCellViewModel: Hashable, Equatable {
+final class RMCharacterCellViewModel: Hashable, Equatable {
     public let characterName: String
     private let characterStatus: RMCharacterStatus
     private let characterImageURL: URL?

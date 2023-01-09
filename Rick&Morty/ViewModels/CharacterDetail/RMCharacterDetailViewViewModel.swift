@@ -10,18 +10,19 @@ import UIKit
 final class RMCharacterDetailViewViewModel {
     private let character: RMCharacter
     
-    enum SectionType: CaseIterable {
-        case photo
-        case information
-        case episodes
+    enum SectionType {
+        case photo(viewModel: RMCharacterPhotoCollectionViewCellViewModel)
+        case information(viewModels: [RMCharacterInfoCollectionViewCellViewModel])
+        case episodes(viewModels: [RMCharacterEpisodeCollectionViewCellViewModel])
     }
     
-    public let sections = SectionType.allCases
+    public var sections: [SectionType] = []
     
     //MARK: - Init
     
     init(character: RMCharacter) {
         self.character = character
+        setUpSections()
     }
     
     public var requestURL: URL? {
@@ -31,7 +32,38 @@ final class RMCharacterDetailViewViewModel {
     public var title: String {
         character.name.uppercased()
     }
-
+    
+    func setUpSections() {
+        /**
+         let species: String
+         let type: String
+         let gender: RMCharacterGender
+         let origin: RMOrigin
+         
+         let location: RMSingleLocation
+         let image: String
+         let episode: [String]
+         let url: String
+         let created: String
+         */
+        sections = [
+            .photo(viewModel: .init(imageURL: URL(string: character.image))),
+            .information(viewModels: [
+                .init(value: character.status.text, title: "Status"),
+                .init(value: character.gender.rawValue, title: "Gender"),
+                .init(value: character.type, title: "Type"),
+                .init(value: character.species, title: "Species"),
+                .init(value: character.origin.name, title: "Origin"),
+                .init(value: character.location.name, title: "Location"),
+                .init(value: character.created, title: "Created"),
+                .init(value: "\(character.episode.count)", title: "Total Episodes")
+            ]),
+            .episodes(viewModels: character.episode.compactMap ({
+                return RMCharacterEpisodeCollectionViewCellViewModel(episodeDataURL: URL(string: $0))
+            }))
+        ]
+    }
+    
     
     //MARK: - Layouts
     public func createPhotoSectionLayout() -> NSCollectionLayoutSection {
@@ -93,9 +125,9 @@ final class RMCharacterDetailViewViewModel {
         
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(0.8),
-                    heightDimension: .absolute(150)
-                ),
+                widthDimension: .fractionalWidth(0.8),
+                heightDimension: .absolute(150)
+            ),
             subitems: [item]
         )
         let section = NSCollectionLayoutSection(group: group)

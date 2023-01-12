@@ -18,6 +18,7 @@ class RMCharacterDetailView: UIView {
         spinner.translatesAutoresizingMaskIntoConstraints = false
         return spinner
     }()
+    
     //MARK: - Initializer
     
     init(frame: CGRect, viewModel: RMCharacterDetailViewViewModel) {

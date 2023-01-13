@@ -33,12 +33,7 @@ final class RMCharacterInfoCollectionViewCellViewModel {
     public var displayValue: String {
         if value.isEmpty { return "None"}
         
-//        if type == .created {
-//            print(value)
-//        }
-        
         if type == .created, let date = Self.dateFormatter.date(from: value) {
-            print(date)
             return Self.shortDateFormatter.string(from: date)
         }
         
